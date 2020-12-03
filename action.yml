@@ -1,0 +1,5 @@
+name: 'Breakline type checker'
+description: 'Validate LF breaklines and avoid using CRLF and CR formats'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
