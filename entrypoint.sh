@@ -19,6 +19,13 @@ echo "$PATHS" | while read FILE ; do
       # skip deleted files
       continue
     fi
+    
+    IS_FILE_BINARY=$(find $FILE -type f | perl -lne 'print if -B' | wc -l)
+    if [[ $IS_FILE_BINARY ]]
+    then
+      continue
+    fi
+    
     CRLF_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CRLF " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     CR_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     
