@@ -24,12 +24,12 @@ echo "$PATHS" | while read FILE ; do
     if [[ $CRLF_COUNT > 0 ]]
     then
       ERROR=101
-      echo "CSRF break-line format is exists in $FILE"
+      echo "CRLF break-line format is exists in $FILE"
     fi
     if [[ $CR_COUNT > 0 ]]
     then
       ERROR=101
-      echo "CSRF break-line format is exists in $FILE"
+      echo "CR break-line format is exists in $FILE"
     fi
 done
 
