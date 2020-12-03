@@ -17,6 +17,6 @@ jobs:
       uses: actions/checkout@master
     - name: breakline format checker
       uses: ateli-development/Breakline-type-checker@master
-      env
+      env:
         MODIFIED_FILES: ${{ steps.file_changes.outputs.files}}
 ```
