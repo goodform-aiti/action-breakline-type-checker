@@ -21,6 +21,9 @@ echo "$PATHS" | while read FILE ; do
     fi
     CRLF_COUNT=$(grep -U $'\015' $FILE | wc -l)
     CR_COUNT=$(grep -U $'\x0D' $FILE | wc -l)
+    echo "CRLF ${CRLF_COUNT} in ${FILE}"
+    echo "CR ${CR_COUNT} in ${FILE}"
+    
     if [[ $CRLF_COUNT > 0 ]]
     then
       ERROR=101
