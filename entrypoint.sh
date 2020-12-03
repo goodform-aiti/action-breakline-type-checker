@@ -34,5 +34,3 @@ echo "$PATHS" | while read FILE ; do
       exit 101
     fi
 done
-
-exit ${ERROR}
