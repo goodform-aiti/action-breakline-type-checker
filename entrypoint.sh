@@ -28,13 +28,13 @@ echo "$PATHS" | while read FILE ; do
     
     if [[ $CRLF_COUNT == 1 ]]
     then
-      ERROR=101
       echo "CRLF break-line format is exists in $FILE"
+      exit 101
     fi
     if [[ $CR_COUNT == 1 ]]
     then
-      ERROR=101
       echo "CR break-line format is exists in $FILE"
+      exit 101
     fi
 done
 
