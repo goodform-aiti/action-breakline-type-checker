@@ -19,17 +19,17 @@ echo "$PATHS" | while read FILE ; do
       # skip deleted files
       continue
     fi
-    CRLF_COUNT=$(grep -U $'\015' $FILE | wc -l)
-    CR_COUNT=$(grep -U $'\x0D' $FILE | wc -l)
+    CRLF_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CRLF " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
+    CR_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     echo "CRLF ${CRLF_COUNT} in ${FILE}"
     echo "CR ${CR_COUNT} in ${FILE}"
     
-    if [[ $CRLF_COUNT > 0 ]]
+    if [[ $CRLF_COUNT == 1 ]]
     then
       ERROR=101
       echo "CRLF break-line format is exists in $FILE"
     fi
-    if [[ $CR_COUNT > 0 ]]
+    if [[ $CR_COUNT == 1 ]]
     then
       ERROR=101
       echo "CR break-line format is exists in $FILE"
