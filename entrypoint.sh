@@ -26,7 +26,6 @@ echo "$PATHS" | while read FILE ; do
       continue
     fi
     
-    echo $(find $FILE -not -type d  -exec file "{}" ";")
     
     CRLF_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CRLF " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     CR_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR " | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
