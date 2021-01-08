@@ -28,7 +28,7 @@ echo "$PATHS" | while read FILE ; do
     
     
     CR_FOUND=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR\(LF\)\? line terminators" | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
-    CR_LINE_DETECTOR=$(find $FILE -not -type d  -exec file "{}" ";" | grep " , with CR\(LF\)\?," | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
+    CR_LINE_DETECTOR=$(find $FILE -not -type d  -exec file "{}" ";" | grep ", with CR\(LF\)\?," | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     
     
     
