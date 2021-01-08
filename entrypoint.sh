@@ -34,14 +34,14 @@ echo "$PATHS" | while read FILE ; do
     if [[ $CRLF_COUNT == 1 ]]
     then
       echo "CRLF break-line format is exists in $FILE:"
-      cat -en $FILE | grep "\^M"
+      cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
       echo "**********************************************"
       exit 101
     fi
     if [[ $CR_COUNT == 1 ]]
     then
       echo "CR break-line format is exists in $FILE"
-      cat -en $FILE | grep "\^M"
+      cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
       echo "**********************************************"
       exit 101
     fi
