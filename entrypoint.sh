@@ -29,12 +29,13 @@ echo "$PATHS" | while read FILE ; do
     
     CR_FOUND=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR\(LF\)\? line terminators" | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     CR_LINE_DETECTOR=$(find $FILE -not -type d  -exec file "{}" ";" | grep ", with CR\(LF\)\?," | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
+    BREAKLINE_TYPE = $(find crlf.php -not -type d  -exec file "{}" ";" | grep -o "CR\(LF\)\?")
     
     
     
     if [[ $CR_FOUND == 1 ]]
     then
-      echo "Whole file( $FILE ) is not LF"
+      echo "Whole file( $FILE ) breakline format is $BREAKLINE_TYPE , it should be LF"
       echo "**********************************************"
       exit 101
     fi
@@ -45,7 +46,7 @@ echo "$PATHS" | while read FILE ; do
     
     if [[ $CR_LINE_DETECTOR == 1 ]]
     then
-      echo "CR or CRLF line breaker found in $FILE:"
+      echo "$BREAKLINE_TYPE line breaker found in $FILE:"
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
       echo "**********************************************"
       exit 101
