@@ -27,20 +27,25 @@ echo "$PATHS" | while read FILE ; do
     fi
     
     
-    CRLF_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CRLF" | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
-    CR_COUNT=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR" | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
+    CR_FOUND=$(find $FILE -not -type d  -exec file "{}" ";" | grep " CR\(LF\)\? line terminators" | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
+    CR_LINE_DETECTOR=$(find $FILE -not -type d  -exec file "{}" ";" | grep " , with CR\(LF\)\?," | cut -d " " -f 1 | cut -d ":" -f 1 | wc -l)
     
     
-    if [[ $CRLF_COUNT == 1 ]]
+    
+    if [[ $CR_FOUND == 1 ]]
     then
-      echo "CRLF break-line format is exists in $FILE:"
-      cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
+      echo "Whole file( $FILE ) is not LF"
       echo "**********************************************"
       exit 101
     fi
-    if [[ $CR_COUNT == 1 ]]
+    
+    
+    
+    
+    
+    if [[ $CR_LINE_DETECTOR == 1 ]]
     then
-      echo "CR break-line format is exists in $FILE"
+      echo "CR or CRLF line breaker found in $FILE:"
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
       echo "**********************************************"
       exit 101
