@@ -44,11 +44,4 @@ echo "$PATHS" | while read FILE ; do
     
     
     
-    if [[ $CR_LINE_DETECTOR == 1 ]]
-    then
-      echo "$BREAKLINE_TYPE line breaker found in $FILE:"
-      cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
-      echo "**********************************************"
-      exit 101
-    fi
 done
