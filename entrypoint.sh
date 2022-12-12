@@ -7,7 +7,7 @@ PATHS=$(printf ${MODIFIED_FILES} | tr \\n '\n')
 printf "\n******************************** MODIFIED FILES ****************************************************************"
 echo ""
 printf ${MODIFIED_FILES}
-printf "\n******************************** ERRORS FOUND ****************************************************************"
+printf "\n********************************  ERRORS FOUND  ****************************************************************"
 
 while read FILE ; do
 
@@ -34,6 +34,8 @@ while read FILE ; do
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
     fi
 done <<< "$PATHS"
+
+printf "\n**************************************************************************************************************"
 
 if [[ $ERROR == 0 ]]; then
   printf "\n* No files with wrong breakline format found in changed files"
