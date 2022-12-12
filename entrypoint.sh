@@ -24,18 +24,20 @@ while read FILE ; do
     BREAKLINE_TYPE=$(find $FILE -not -type d  -exec file "{}" ";" | grep -o "CR\(LF\)\?")
 
     if [[ $CR_FOUND == 1 ]]; then
-      echo "\n* Whole file( $FILE ) breakline format is $BREAKLINE_TYPE , it should be LF"
+      printf "\n* Whole file( $FILE ) breakline format is $BREAKLINE_TYPE , it should be LF"
       ERROR=1
     fi
 
     if [[ $CR_LINE_DETECTOR == 1 ]]; then
-      echo "\n* $BREAKLINE_TYPE line breaker found in $FILE:"
+      printf "\n* $BREAKLINE_TYPE line breaker found in $FILE:"
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
     fi
 done <<< "$(echo -e "$MODIFIED_FILES")"
 
 if [[ $ERROR == 0 ]]; then
-  printf "\n* No files with wrong breakline format found in changed files"  
+  printf "\n* No files with wrong breakline format found in changed files"
+  exit 0
 else
+  printf "\n* There are files with wrong breakline format, please fix them (see above)"
   exit 101
 fi
