@@ -4,11 +4,11 @@ ERROR=0
 PATHS=$(printf ${MODIFIED_FILES} | tr \\n '\n')
 
 
-echo "******************************** MODIFIED FILES ********************************"
+printf "\n******************************** MODIFIED FILES ****************************************************************"
 printf ${MODIFIED_FILES}
-printf "\n********************************* ERRORS FOUND *******************************************************************"
+printf "\n******************************** ERRORS FOUND ****************************************************************"
 
-ERROR=$(echo "$PATHS" | (while read FILE ; do
+while read FILE ; do
 
     if [[ ! -f $FILE ]]; then
       continue # skip deleted files
@@ -31,17 +31,11 @@ ERROR=$(echo "$PATHS" | (while read FILE ; do
     if [[ $CR_LINE_DETECTOR == 1 ]]; then
       echo "\n* $BREAKLINE_TYPE line breaker found in $FILE:"
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
-      ERROR=1
     fi
-done && echo $ERROR))
+done <<< "$(echo -e "$MODIFIED_FILES")"
 
 if [[ $ERROR == 0 ]]; then
-  printf "\n* No files with wrong breakline format found in changed files"
-fi
-
-printf "\n******************************************************************************************************************\n"
-
-
-if [[ $ERROR == 1 ]]; then
+  printf "\n* No files with wrong breakline format found in changed files"  
+else
   exit 101
 fi
