@@ -32,7 +32,7 @@ while read FILE ; do
       printf "\n* $BREAKLINE_TYPE line breaker found in $FILE:"
       cat -en $FILE | grep "\^M" | sed 's/\^M\$//g'
     fi
-done <<< $PATHS"
+done <<< "$PATHS"
 
 if [[ $ERROR == 0 ]]; then
   printf "\n* No files with wrong breakline format found in changed files"
